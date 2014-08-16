@@ -1,0 +1,23 @@
+C:\Users\Stark\Downloads\CawAIO-master\bin\Release\CawAIO.dll
+C:\Users\Stark\Downloads\CawAIO-master\bin\Release\CawAIO.pdb
+C:\Users\Stark\Downloads\CawAIO-master\bin\Release\HttpServer.dll
+C:\Users\Stark\Downloads\CawAIO-master\bin\Release\Mono.Data.Sqlite.dll
+C:\Users\Stark\Downloads\CawAIO-master\bin\Release\MySql.Data.dll
+C:\Users\Stark\Downloads\CawAIO-master\bin\Release\MySql.Web.dll
+C:\Users\Stark\Downloads\CawAIO-master\bin\Release\Newtonsoft.Json.dll
+C:\Users\Stark\Downloads\CawAIO-master\bin\Release\TerrariaServer.exe
+C:\Users\Stark\Downloads\CawAIO-master\bin\Release\TShockAPI.dll
+C:\Users\Stark\Downloads\CawAIO-master\obj\Release\CawAIO.dll
+C:\Users\Stark\Downloads\CawAIO-master\obj\Release\CawAIO.pdb
+C:\Users\Stark\Desktop\바탕 화면\게임\Terraria\Tshock resources\Folders\CawAIO-master\bin\Release\HttpServer.dll
+C:\Users\Stark\Desktop\바탕 화면\게임\Terraria\Tshock resources\Folders\CawAIO-master\bin\Release\Mono.Data.Sqlite.dll
+C:\Users\Stark\Desktop\바탕 화면\게임\Terraria\Tshock resources\Folders\CawAIO-master\bin\Release\MySql.Data.dll
+C:\Users\Stark\Desktop\바탕 화면\게임\Terraria\Tshock resources\Folders\CawAIO-master\bin\Release\MySql.Web.dll
+C:\Users\Stark\Desktop\바탕 화면\게임\Terraria\Tshock resources\Folders\CawAIO-master\bin\Release\Newtonsoft.Json.dll
+C:\Users\Stark\Desktop\바탕 화면\게임\Terraria\Tshock resources\Folders\CawAIO-master\bin\Release\TerrariaServer.exe
+C:\Users\Stark\Desktop\바탕 화면\게임\Terraria\Tshock resources\Folders\CawAIO-master\bin\Release\TShockAPI.dll
+C:\Users\Stark\Desktop\바탕 화면\게임\Terraria\Tshock resources\Folders\CawAIO-master\bin\Release\S.CawAIO.dll
+C:\Users\Stark\Desktop\바탕 화면\게임\Terraria\Tshock resources\Folders\CawAIO-master\bin\Release\S.CawAIO.pdb
+C:\Users\Stark\Desktop\바탕 화면\게임\Terraria\Tshock resources\Folders\CawAIO-master\obj\Release\S.CawAIO.dll
+C:\Users\Stark\Desktop\바탕 화면\게임\Terraria\Tshock resources\Folders\CawAIO-master\obj\Release\S.CawAIO.pdb
+C:\Users\Stark\Desktop\바탕 화면\게임\Terraria\Tshock resources\Folders\CawAIO-master\obj\Release\S.CawAIO.csprojResolveAssemblyReference.cache

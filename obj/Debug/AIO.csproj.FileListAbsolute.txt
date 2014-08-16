@@ -1,0 +1,11 @@
+D:\dev\Work\CawAIO\bin\HttpServer.dll
+D:\dev\Work\CawAIO\bin\Mono.Data.Sqlite.dll
+D:\dev\Work\CawAIO\bin\Newtonsoft.Json.dll
+D:\dev\Work\CawAIO\bin\TerrariaServer.exe
+D:\dev\Work\CawAIO\bin\TShockAPI.dll
+D:\dev\Work\CawAIO\bin\Wolfje.Plugins.SEconomy.dll
+D:\dev\Work\CawAIO\obj\Debug\AIO.csprojResolveAssemblyReference.cache
+D:\dev\Work\CawAIO\bin\AIO.dll
+D:\dev\Work\CawAIO\bin\AIO.pdb
+D:\dev\Work\CawAIO\obj\Debug\AIO.dll
+D:\dev\Work\CawAIO\obj\Debug\AIO.pdb
