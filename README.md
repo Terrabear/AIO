@@ -1,4 +1,4 @@
 AIO
 ===
 
-All-In-One Commands
+All-In-One Package
