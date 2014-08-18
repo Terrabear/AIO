@@ -7,6 +7,7 @@ using Terraria;
 using TerrariaApi.Server;
 using TShockAPI;
 using Wolfje.Plugins.SEconomy;
+using Wolfje.Plugins.SEconomy.Journal;
 
 namespace AIO
 {
@@ -44,7 +45,7 @@ namespace AIO
             Order = 1;
         }
     
-        #region Initialize
+        #region Init&Dispose
         public override void Initialize()
         {
             //TShockAPI.Commands.ChatCommands.Add(new Command("aio.smack", Smack, "smack"));
@@ -56,7 +57,7 @@ namespace AIO
             TShockAPI.Commands.ChatCommands.Add(new Command("aio.igamble", Gamble, "igamble", "ig"));
             TShockAPI.Commands.ChatCommands.Add(new Command("aio.mgamble", MonsterGamble, "mgamble", "mg"));
             TShockAPI.Commands.ChatCommands.Add(new Command("aio.jester", Jester, "jester", "jet"));
-            TShockAPI.Commands.ChatCommands.Add(new Command("aio.townnpc", TownNpc, "townnpc"));
+            TShockAPI.Commands.ChatCommands.Add(new Command("aio.townnpc", TownNPC, "townnpc"));
             //TShockAPI.Commands.ChatCommands.Add(new Command("caw.toggle", toggle, "duckhunttoggle"));
 
             ServerApi.Hooks.ServerChat.Register(this, NoShadowDodge_Chat);
@@ -67,9 +68,7 @@ namespace AIO
             ServerApi.Hooks.GameUpdate.Register(this, Cooldowns);
             ReadConfig();
         }
-        #endregion
-
-        #region Dispose
+        
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -117,40 +116,47 @@ namespace AIO
         }
         #endregion
 
-        #region Spawn Town Npcs
-        public void TownNpc(CommandArgs args)
+        #region TownNPC
+        public void TownNPC(CommandArgs args)
         {
-            int killcount = 0;
+            //int killcount = 0;
+            int X = 12;
+            int Y = 12;
             for (int i = 0; i < Main.npc.Length; i++)
             {
                 if (Main.npc[i].active && Main.npc[i].townNPC)
                 {
-                    TSPlayer.Server.StrikeNPC(i, 99999, 90f, 1);
-                    killcount++;
+                        foreach(NPC npc in Main.npc)
+                        {
+                        npc.active = false;
+                        //TSPlayer.Server.StrikeNPC(i, 99999, 90f, 1);
+                        //killcount++;
+                        }
                 }
             }
-            TSPlayer.All.SendSuccessMessage(string.Format("[NPC] {0} killed {1} town NPCs and respawned them successfully.", args.Player.Name, killcount));
-            TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(19).type, TShock.Utils.GetNPCById(19).name, 1, args.Player.TileX, args.Player.TileY, 20, 20);
-            TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(54).type, TShock.Utils.GetNPCById(54).name, 1, args.Player.TileX, args.Player.TileY, 20, 20);
-            TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(209).type, TShock.Utils.GetNPCById(209).name, 1, args.Player.TileX, args.Player.TileY, 20, 20);
-            TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(38).type, TShock.Utils.GetNPCById(38).name, 1, args.Player.TileX, args.Player.TileY, 20, 20);
-            TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(20).type, TShock.Utils.GetNPCById(20).name, 1, args.Player.TileX, args.Player.TileY, 20, 20);
-            TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(207).type, TShock.Utils.GetNPCById(207).name, 1, args.Player.TileX, args.Player.TileY, 20, 20);
-            TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(107).type, TShock.Utils.GetNPCById(107).name, 1, args.Player.TileX, args.Player.TileY, 20, 20);
-            TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(22).type, TShock.Utils.GetNPCById(22).name, 1, args.Player.TileX, args.Player.TileY, 20, 20);
-            TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(124).type, TShock.Utils.GetNPCById(124).name, 1, args.Player.TileX, args.Player.TileY, 20, 20);
-            TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(17).type, TShock.Utils.GetNPCById(17).name, 1, args.Player.TileX, args.Player.TileY, 20, 20);
-            TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(18).type, TShock.Utils.GetNPCById(18).name, 1, args.Player.TileX, args.Player.TileY, 20, 20);
-            TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(227).type, TShock.Utils.GetNPCById(227).name, 1, args.Player.TileX, args.Player.TileY, 20, 20);
-            TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(208).type, TShock.Utils.GetNPCById(208).name, 1, args.Player.TileX, args.Player.TileY, 20, 20);
-            TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(229).type, TShock.Utils.GetNPCById(229).name, 1, args.Player.TileX, args.Player.TileY, 20, 20);
-            TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(178).type, TShock.Utils.GetNPCById(178).name, 1, args.Player.TileX, args.Player.TileY, 20, 20);
-            TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(353).type, TShock.Utils.GetNPCById(353).name, 1, args.Player.TileX, args.Player.TileY, 20, 20);
-            TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(368).type, TShock.Utils.GetNPCById(368).name, 1, args.Player.TileX, args.Player.TileY, 20, 20);
-            TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(160).type, TShock.Utils.GetNPCById(160).name, 1, args.Player.TileX, args.Player.TileY, 20, 20);
-            TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(228).type, TShock.Utils.GetNPCById(228).name, 1, args.Player.TileX, args.Player.TileY, 20, 20);
-            TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(108).type, TShock.Utils.GetNPCById(108).name, 1, args.Player.TileX, args.Player.TileY, 20, 20);
-            //TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(142).type, TShock.Utils.GetNPCById(142).name, 1, args.Player.TileX, args.Player.TileY, 20, 20);
+            //TSPlayer.All.SendSuccessMessage(string.Format("[NPC] {0} killed {1} town NPCs and respawned them successfully.", args.Player.Name, killcount));
+            TSPlayer.All.SendMessage(string.Format("[AIO] {0} respawned all TownNPCs!", args.Player.Name), Color.Lime);
+            TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(19).type, TShock.Utils.GetNPCById(19).name, 1, args.Player.TileX, args.Player.TileY, X, Y);
+            TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(54).type, TShock.Utils.GetNPCById(54).name, 1, args.Player.TileX, args.Player.TileY, X, Y);
+            TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(209).type, TShock.Utils.GetNPCById(209).name, 1, args.Player.TileX, args.Player.TileY, X, Y);
+            TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(38).type, TShock.Utils.GetNPCById(38).name, 1, args.Player.TileX, args.Player.TileY, X, Y);
+            TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(20).type, TShock.Utils.GetNPCById(20).name, 1, args.Player.TileX, args.Player.TileY, X, Y);
+            TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(207).type, TShock.Utils.GetNPCById(207).name, 1, args.Player.TileX, args.Player.TileY, X, Y);
+            TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(107).type, TShock.Utils.GetNPCById(107).name, 1, args.Player.TileX, args.Player.TileY, X, Y);
+            TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(22).type, TShock.Utils.GetNPCById(22).name, 1, args.Player.TileX, args.Player.TileY, X, Y);
+            TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(124).type, TShock.Utils.GetNPCById(124).name, 1, args.Player.TileX, args.Player.TileY, X, Y);
+            TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(17).type, TShock.Utils.GetNPCById(17).name, 1, args.Player.TileX, args.Player.TileY, X, Y);
+            TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(18).type, TShock.Utils.GetNPCById(18).name, 1, args.Player.TileX, args.Player.TileY, X, Y);
+            TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(227).type, TShock.Utils.GetNPCById(227).name, 1, args.Player.TileX, args.Player.TileY, X, Y);
+            TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(208).type, TShock.Utils.GetNPCById(208).name, 1, args.Player.TileX, args.Player.TileY, X, Y);
+            TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(229).type, TShock.Utils.GetNPCById(229).name, 1, args.Player.TileX, args.Player.TileY, X, Y);
+            TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(178).type, TShock.Utils.GetNPCById(178).name, 1, args.Player.TileX, args.Player.TileY, X, Y);
+            TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(353).type, TShock.Utils.GetNPCById(353).name, 1, args.Player.TileX, args.Player.TileY, X, Y);
+            TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(368).type, TShock.Utils.GetNPCById(368).name, 1, args.Player.TileX, args.Player.TileY, X, Y);
+            TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(160).type, TShock.Utils.GetNPCById(160).name, 1, args.Player.TileX, args.Player.TileY, X, Y);
+            TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(228).type, TShock.Utils.GetNPCById(228).name, 1, args.Player.TileX, args.Player.TileY, X, Y);
+            TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(108).type, TShock.Utils.GetNPCById(108).name, 1, args.Player.TileX, args.Player.TileY, X, Y);
+            //TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(142).type, TShock.Utils.GetNPCById(142).name, 1, args.Player.TileX, args.Player.TileY, X, Y);
         }
         #endregion
 
@@ -205,7 +211,7 @@ namespace AIO
             }
             else
             {
-                args.Player.SendErrorMessage("RMTP is on cooldown for {0} seconds.", (player.RMTP_Cooldown));
+                args.Player.SendErrorMessage("[RMTP] Cooldown: {0} seconds left.", (player.RMTP_Cooldown));
             }
         }
         #endregion
@@ -240,7 +246,7 @@ namespace AIO
             }
             else
             {
-                args.Player.SendErrorMessage("[AIO] RPTP is on cooldown for {0} seconds.", player.RPTP_Cooldown);
+                args.Player.SendErrorMessage("[RPTP] Cooldown: {0} seconds left.", player.RPTP_Cooldown);
             }
         }
         #endregion
@@ -421,8 +427,10 @@ namespace AIO
             Random random = new Random();
             int amount = random.Next(1, 50);
             var Journalpayment = Wolfje.Plugins.SEconomy.Journal.BankAccountTransferOptions.AnnounceToSender;
-            var selectedPlayer = SEconomyPlugin.GetEconomyPlayerByBankAccountNameSafe(args.Player.UserAccountName);
-            var playeramount = selectedPlayer.BankAccount.Balance;
+            //var selectedPlayer = SEconomyPlugin.GetEconomyPlayerByBankAccountNameSafe(args.Player.UserAccountName);
+            //var playeramount = selectedPlayer.BankAccount.Balance;
+            var selectedPlayer = SEconomyPlugin.Instance.GetBankAccount(args.Player.UserAccountName);
+            var playeramount = selectedPlayer.Balance;
             var player = Playerlist[args.Player.Index];
             Money moneyamount = -config.MonsterGambleCost;
             Money moneyamount2 = config.MonsterGambleCost;
@@ -451,12 +459,14 @@ namespace AIO
                                 TSPlayer.Server.SpawnNPC(npcs.type, npcs.name, amount, args.Player.TileX, args.Player.TileY, 50, 20);
                                 TSPlayer.All.SendSuccessMessage(string.Format("{0} has randomly spawned {1} {2} time(s).", args.Player.Name, npcs.name, amount));
                                 args.Player.SendSuccessMessage("You've lost {0} for monster gambling.", moneyamount2);
-                                SEconomyPlugin.WorldAccount.TransferToAsync(selectedPlayer.BankAccount, moneyamount, Journalpayment, 
-                                    string.Format("{0} has been lost for monster gambling", moneyamount2, args.Player.Name), string.Format("CawAIO: " + "Monster Gambling"));
+                                //SEconomyPlugin.WorldAccount.TransferToAsync(selectedPlayer.BankAccount, moneyamount, Journalpayment, 
+                                //    string.Format("{0} has been lost for monster gambling", moneyamount2, args.Player.Name), string.Format("CawAIO: " + "Monster Gambling"));
+                                SEconomyPlugin.Instance.WorldAccount.TransferToAsync(selectedPlayer, moneyamount, Journalpayment, 
+                                    string.Format("{0} has been lost for monster gambling", moneyamount2, args.Player.Name), string.Format("AIO: " + "Monster Gambling"));
                             }
                             else
                             {
-                                args.Player.SendErrorMessage("You need {0} to gamble, you have {1}.", moneyamount2, selectedPlayer.BankAccount.Balance);
+                                args.Player.SendErrorMessage("You need {0} to gamble, you have {1}.", moneyamount2, selectedPlayer.Balance);
                             }
                         }
                         else
@@ -492,7 +502,7 @@ namespace AIO
             }
             else
                     {
-                        args.Player.SendErrorMessage("M.gamble is on cooldown for {0} seconds.", player.CD_MGamble);
+                        args.Player.SendErrorMessage("[M.Gamble] Cooldown: {0} seconds left.", player.CD_MGamble);
                     }        
         }
         #endregion
@@ -503,8 +513,10 @@ namespace AIO
             Random random = new Random();
             int itemAmount = 0;
             int prefixId = random.Next(1, 83);
-            var UsernameBankAccount = SEconomyPlugin.GetEconomyPlayerByBankAccountNameSafe(args.Player.UserAccountName);
-            var playeramount = UsernameBankAccount.BankAccount.Balance;
+            //var UsernameBankAccount = SEconomyPlugin.GetEconomyPlayerByBankAccountNameSafe(args.Player.UserAccountName);
+            //var playeramount = UsernameBankAccount.BankAccount.Balance;
+            var UsernameBankAccount = SEconomyPlugin.Instance.GetBankAccount(args.Player.UserAccountName);
+            var playeramount = UsernameBankAccount.Balance;
             var player = Playerlist[args.Player.Index];
             Money amount = -config.GambleCost;
             Money amount2 = config.GambleCost;
@@ -540,7 +552,7 @@ namespace AIO
 
                                 args.Player.GiveItemCheck(item.type, item.name, item.width, item.height, itemAmount, prefixId);
 
-                                SEconomyPlugin.WorldAccount.TransferToAsync(UsernameBankAccount.BankAccount, amount,
+                                SEconomyPlugin.Instance.WorldAccount.TransferToAsync(UsernameBankAccount, amount,
                                     Journalpayment, string.Format("{0} has been lost for gambling", amount2, args.Player.Name),
                                     string.Format("CawAIO: " + "Item Gambling"));
 
@@ -585,7 +597,7 @@ namespace AIO
                     }
                     else
                     {
-                        args.Player.SendErrorMessage("You need {0} to gamble, you have {1}.", amount2, UsernameBankAccount.BankAccount.Balance);
+                        args.Player.SendErrorMessage("You need {0} to gamble, you have {1}.", amount2, UsernameBankAccount.Balance);
                     }
                 }
                 else
@@ -639,12 +651,12 @@ namespace AIO
         }
             else
             {
-                args.Player.SendErrorMessage("I.gamble is on cooldown for {0} seconds.", player.CD_IGamble);
+                args.Player.SendErrorMessage("[I.Gamble] Cooldown: {0} seconds left", player.CD_IGamble);
             }
         }
         #endregion
-
-        /*#region Smack command
+        
+        /* #region Smack
         private void Smack(CommandArgs args)
         {
             if (args.Parameters.Count > 0)
@@ -708,7 +720,7 @@ namespace AIO
 
         }*/
 
-        /*#region Bunny Command
+        /* #region Bunny Command
         private void Bunny(CommandArgs args)
         {
             TSPlayer player = TShock.Players[args.Player.Index];
@@ -929,8 +941,7 @@ namespace AIO
         }
         #endregion
     }
-
-    #region Players
+        #region Players
     public class Players
     {
         public int Index { get; set; }
