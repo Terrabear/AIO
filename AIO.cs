@@ -14,14 +14,16 @@ namespace AIO
     [ApiVersion(1, 16)]
     public class CawAIO : TerrariaPlugin
     {
-        public int actionType = 0;
+        public int WarningCount = 0;
         private Config config;
         public DateTime LastCheck = DateTime.UtcNow;
-        public Players[] Playerlist = new Players[256];
+        public DateTime SLastCheck = DateTime.UtcNow;
+        public CPlayers[] Playerlist = new CPlayers[256];
+        DateTime DLastCheck = DateTime.UtcNow;
 
         public override Version Version
         {
-            get { return new Version("2.0.0.0"); }
+            get { return new Version("1.9.5"); }
         }
 
         public override string Name
@@ -50,7 +52,7 @@ namespace AIO
         {
             //TShockAPI.Commands.ChatCommands.Add(new Command("aio.smack", Smack, "smack"));
             //TShockAPI.Commands.ChatCommands.Add(new Command("aio.bunny", Bunny, "bunny"));
-            TShockAPI.Commands.ChatCommands.Add(new Command("aio.owncast", Owncast, "oc"));
+            TShockAPI.Commands.ChatCommands.Add(new Command("aio.ownercast", Ownercast, "oc"));
             TShockAPI.Commands.ChatCommands.Add(new Command("aio.reload", Reload_Config, "aioload"));
             TShockAPI.Commands.ChatCommands.Add(new Command("aio.rptp", RandomTp, "randomtp", "rptp"));
             TShockAPI.Commands.ChatCommands.Add(new Command("aio.rmtp", RandomMapTp, "randommaptp", "rmtp"));
@@ -87,7 +89,7 @@ namespace AIO
         #region Playerlist OnJoin/OnLeave
         public void OnJoin(JoinEventArgs args)
         {
-            Playerlist[args.Who] = new Players(args.Who);
+            Playerlist[args.Who] = new CPlayers(args.Who);
         }
         public void OnLeave(LeaveEventArgs args)
         {
@@ -732,13 +734,13 @@ namespace AIO
         }
         #endregion*/
 
-        #region Owncast Command
-        private void Owncast(CommandArgs args)
+        #region Ownercast Command
+        private void Ownercast(CommandArgs args)
         {
             string message = string.Join(" ", args.Parameters);
 
             TShock.Utils.Broadcast(
-                "[MOTD] " + message, Color.PaleGoldenrod);
+                "(Ownercast) " + message, Convert.ToByte(config.OwnerCastColorRGB[0]), Convert.ToByte(config.OwnerCastColorRGB[1]), Convert.ToByte(config.OwnerCastColorRGB[2]));
         }
         #endregion
 
@@ -783,8 +785,14 @@ namespace AIO
         {
             var ignored = new List<string>();
             var censored = new List<string>();
+            var warningwords = new List<string>();
             var player = TShock.Players[args.Who];
             var text = args.Text;
+
+            if (player == null)
+            {
+                return;
+            }
 
             if (!args.Text.ToLower().StartsWith("/") || args.Text.ToLower().StartsWith("/w") ||
                 args.Text.ToLower().StartsWith("/r") || args.Text.ToLower().StartsWith("/me") ||
@@ -797,7 +805,7 @@ namespace AIO
                         args.Handled = false;
                     }
 
-                    else if (args.Text.ToLower().Contains(Word))
+                    else if (args.Text.ToLower().Equals(Word))
                     {
                         if (player.mute)
                         {
@@ -808,6 +816,60 @@ namespace AIO
                         {
                             switch (config.ActionForBannedWord)
                             {
+                                case "tempban":
+                                    args.Handled = true;
+                                    if (config.WarningSystem)
+                                    {
+                                        foreach (var wplayer in Playerlist)
+                                        {
+                                            if (wplayer == null)
+                                            {
+                                                return;
+                                            }
+                                            if (wplayer.WarningCount >= config.AmountofWarningBeforeAction)
+                                            {
+                                                TShock.Bans.AddBan(player.IP, player.Name, player.UUID, config.KickMessage, false, player.UserAccountName, DateTime.UtcNow.AddMinutes(config.BanTimeInMinutes).ToString("m"));
+                                            }
+                                            else
+                                            {
+                                                wplayer.WarningCount += 1;
+                                                warningwords.Add(Word);
+                                                player.SendErrorMessage("You have said a banned word: " + string.Join(" ", warningwords) + " You will be temp-banned in " + (config.AmountofWarningBeforeAction - wplayer.WarningCount) + " more incidents.");
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        TShock.Bans.AddBan(player.IP, player.Name, player.UUID, config.KickMessage, false, player.UserAccountName, DateTime.UtcNow.AddMinutes(config.BanTimeInMinutes).ToString("m"));
+                                    }
+                                    return;
+                                case "ban":
+                                    args.Handled = true;
+                                    if (config.WarningSystem)
+                                    {
+                                        foreach (var wplayer in Playerlist)
+                                        {
+                                            if (wplayer == null)
+                                            {
+                                                return;
+                                            }
+                                            if (wplayer.WarningCount >= config.AmountofWarningBeforeAction)
+                                            {
+                                                TShock.Bans.AddBan(player.IP, player.Name, player.UUID, config.KickMessage, false, player.UserAccountName);
+                                            }
+                                            else
+                                            {
+                                                wplayer.WarningCount += 1;
+                                                warningwords.Add(Word);
+                                                player.SendErrorMessage("You have said a banned word: " + string.Join(" ", warningwords) + " You will be banned in " + (config.AmountofWarningBeforeAction - wplayer.WarningCount) + " more incidents.");
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        TShock.Bans.AddBan(player.IP, player.Name, player.UUID, config.KickMessage, false, player.UserAccountName);
+                                    }
+                                    return;
                                 case "kick":
                                     args.Handled = true;
                                     TShock.Utils.Kick(player, config.KickMessage, true, false);
@@ -820,7 +882,7 @@ namespace AIO
                                     args.Handled = true;
                                     text = args.Text;
                                     text = args.Text.Replace(Word, new string('*', Word.Length));
-                                    TSPlayer.All.SendMessage("<" + "(" + player.Group.Name + ") " + player.Name + ">" + text, player.Group.R, player.Group.G, player.Group.B);
+                                    //TSPlayer.All.SendMessage("<" + "(" + player.Group.Name + ") " + player.Name + ">" + text, player.Group.R, player.Group.G, player.Group.B);
                                     //TSPlayer.All.SendMessage(player.Group.Prefix + player.Name + ": " + text, player.Group.R, player.Group.G, player.Group.B);
                                     return;
                                 case "null":
@@ -830,9 +892,14 @@ namespace AIO
                         }
                     }
                 }
+                if (warningwords.Count > 0 && WarningCount < 3)
+                {
+                    player.SendErrorMessage("[AIO] You've been ignored for saying: " + string.Join(", ", warningwords));
+                    player.SendErrorMessage("[AIO] Warning Count: {0}. After {1} warnings you will be {2}", WarningCount, config.AmountofWarningBeforeAction, config.ActionForBannedWord.ToString());
+                }
                 if (ignored.Count > 0)
                 {
-                    player.SendErrorMessage("You've been ignored for saying: " + string.Join(", ", ignored));
+                    player.SendErrorMessage("[AIO] You've been ignored for saying: " + string.Join(", ", ignored));
                     return;
                 }
             }
@@ -905,9 +972,13 @@ namespace AIO
         public class Config
         {
             public string ActionForBannedWord = "ignore";
+            public float[] OwnerCastColorRGB = new float[3];
+            public bool WarningSystem = true;
+            public int AmountofWarningBeforeAction = 3;
             public string[] BanWords = { "yolo", "swag", "fuck", "shit" };
             public string KickMessage = "You've said a banned word.";
-            public bool ForceHalloween = false;
+            public int BanTimeInMinutes = 10;
+            //public bool ForceHalloween = false;
             public bool SEconomy = true;
             public bool NoShadowDodge_Chat = false;
             public bool NoShadowDodge_Armor = false;
@@ -943,7 +1014,7 @@ namespace AIO
         #endregion
     }
         #region Players
-    public class Players
+    public class CPlayers
     {
         public int Index { get; set; }
         public TSPlayer TSPlayer { get { return TShock.Players[Index]; } }
@@ -951,8 +1022,9 @@ namespace AIO
         public int RPTP_Cooldown { get; set; }
         public int CD_IGamble { get; set; }
         public int CD_MGamble { get; set; }
+        public int WarningCount { get; set; }
 
-        public Players(int index)
+        public CPlayers(int index)
         {
             this.Index = index;
         }
