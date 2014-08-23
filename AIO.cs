@@ -31,7 +31,7 @@ namespace AIO
 
         public override string Author
         {
-            get { return "SpecialOps0 + Terrabear"; }
+            get { return "SpecialOps0 & Terrabear"; }
         }
 
         public override string Description
@@ -120,18 +120,20 @@ namespace AIO
         public void TownNPC(CommandArgs args)
         {
             //int killcount = 0;
+            //var npc = new NPC();
             int X = 12;
             int Y = 12;
             for (int i = 0; i < Main.npc.Length; i++)
             {
                 if (Main.npc[i].active && Main.npc[i].townNPC)
                 {
-                        foreach(NPC npc in Main.npc)
-                        {
+                    foreach (NPC npc in Main.npc)
+                    {
                         npc.active = false;
-                        //TSPlayer.Server.StrikeNPC(i, 99999, 90f, 1);
-                        //killcount++;
-                        }
+                    }
+
+                    //TSPlayer.Server.StrikeNPC(i, 99999, 90f, 1);
+                    //killcount++;
                 }
             }
             //TSPlayer.All.SendSuccessMessage(string.Format("[NPC] {0} killed {1} town NPCs and respawned them successfully.", args.Player.Name, killcount));
@@ -256,8 +258,7 @@ namespace AIO
         {
             if (args.Parameters.Count != 1)
             {
-                args.Player.SendInfoMessage("[Info] /jester(jet) <bird>, <pigstick>, <ball>, <goblin>, <pirate>, <flegion>, <dlegion>");
-                args.Player.SendInfoMessage("[Info] /jester(jet) <nmboss>, <mcboss>, <hmboss>, <pumpboss>, <frozboss>, <allboss>");
+                args.Player.SendInfoMessage("[INFO] /jester(jet) <bird>, <pigstick>, <ball>, <goblin>, <pirate>, <flegion>, <dlegion>, <nmboss>, <mcboss>, <hmboss>, <pumpboss>, <frozboss>, <allboss>");
                 return;
             }
             switch (args.Parameters[0])
@@ -297,7 +298,7 @@ namespace AIO
                     TSPlayer.All.SendMessage(string.Format("{0} has spawned Dungeon Balls, Pop pop!", args.Player.Name), Color.Coral);
                     break;
                 case "allboss":
-                    TSPlayer.Server.SetTime(false, 0.0);
+                    //TSPlayer.Server.SetTime(false, 0.0);
                     TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(13).type, TShock.Utils.GetNPCById(13).name, 1, args.Player.TileX, args.Player.TileY, 50, 20);
                     TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(50).type, TShock.Utils.GetNPCById(50).name, 1, args.Player.TileX, args.Player.TileY, 50, 20);
                     TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(35).type, TShock.Utils.GetNPCById(35).name, 1, args.Player.TileX, args.Player.TileY, 50, 20);
@@ -318,7 +319,7 @@ namespace AIO
                     TSPlayer.All.SendMessage(string.Format("{0} has spawned Every Bosses, Wow Aww!", args.Player.Name), Color.Coral);
                     break;
                 case "nmboss":
-                    TSPlayer.Server.SetTime(false, 0.0);
+                    //TSPlayer.Server.SetTime(false, 0.0);
                     TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(50).type, TShock.Utils.GetNPCById(50).name, 1, args.Player.TileX, args.Player.TileY, 50, 20);
                     TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(50).type, TShock.Utils.GetNPCById(13).name, 1, args.Player.TileX, args.Player.TileY, 50, 20);
                     TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(35).type, TShock.Utils.GetNPCById(35).name, 1, args.Player.TileX, args.Player.TileY, 50, 20);
@@ -328,7 +329,7 @@ namespace AIO
                     TSPlayer.All.SendMessage(string.Format("{0} has spawned Normal Bosses, Bam bam!", args.Player.Name), Color.Coral);
                     break;
                 case "hmboss":
-                    TSPlayer.Server.SetTime(false, 0.0);
+                    //TSPlayer.Server.SetTime(false, 0.0);
                     TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(125).type, TShock.Utils.GetNPCById(125).name, 1, args.Player.TileX, args.Player.TileY, 50, 20);
                     TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(126).type, TShock.Utils.GetNPCById(126).name, 1, args.Player.TileX, args.Player.TileY, 50, 20);
                     TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(127).type, TShock.Utils.GetNPCById(127).name, 1, args.Player.TileX, args.Player.TileY, 50, 20);
@@ -338,21 +339,21 @@ namespace AIO
                     TSPlayer.All.SendMessage(string.Format("{0} has spawned Hardmode Bosses, Boom boom!", args.Player.Name), Color.Coral);
                     break;
                 case "pumpboss":
-                    TSPlayer.Server.SetTime(false, 0.0);
+                    //TSPlayer.Server.SetTime(false, 0.0);
                     TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(328).type, TShock.Utils.GetNPCById(328).name, 1, args.Player.TileX, args.Player.TileY, 50, 20);
                     TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(325).type, TShock.Utils.GetNPCById(325).name, 1, args.Player.TileX, args.Player.TileY, 50, 20);
                     TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(315).type, TShock.Utils.GetNPCById(315).name, 2, args.Player.TileX, args.Player.TileY, 50, 20);
                     TSPlayer.All.SendMessage(string.Format("{0} has spawned Pumpkin Bosses, Thunk thunk!", args.Player.Name), Color.Coral);
                     break;
                 case "frozboss":
-                    TSPlayer.Server.SetTime(false, 0.0);
+                    //TSPlayer.Server.SetTime(false, 0.0);
                     TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(344).type, TShock.Utils.GetNPCById(344).name, 1, args.Player.TileX, args.Player.TileY, 50, 20);
                     TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(345).type, TShock.Utils.GetNPCById(345).name, 1, args.Player.TileX, args.Player.TileY, 50, 20);
                     TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(346).type, TShock.Utils.GetNPCById(346).name, 1, args.Player.TileX, args.Player.TileY, 50, 20);
                     TSPlayer.All.SendMessage(string.Format("{0} has spawned Frozen Bosses, Jesus Crist!", args.Player.Name), Color.Coral);
                     break;
                 case "mcboss":
-                    TSPlayer.Server.SetTime(false, 0.0);
+                    //TSPlayer.Server.SetTime(false, 0.0);
                     TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(125).type, TShock.Utils.GetNPCById(125).name, 1, args.Player.TileX, args.Player.TileY, 50, 20);
                     TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(126).type, TShock.Utils.GetNPCById(126).name, 1, args.Player.TileX, args.Player.TileY, 50, 20);
                     TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(127).type, TShock.Utils.GetNPCById(127).name, 1, args.Player.TileX, args.Player.TileY, 50, 20);
@@ -360,7 +361,7 @@ namespace AIO
                     TSPlayer.All.SendMessage(string.Format("{0} has spawned Mechanical Bosses, Clink clank!", args.Player.Name), Color.Coral);
                     break;
                 case "goblin":
-                    TSPlayer.Server.SetTime(false, 0.0);
+                    //TSPlayer.Server.SetTime(false, 0.0);
                     TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(25).type, TShock.Utils.GetNPCById(25).name, 8, args.Player.TileX, args.Player.TileY, 50, 20);
                     TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(26).type, TShock.Utils.GetNPCById(26).name, 5, args.Player.TileX, args.Player.TileY, 50, 20);
                     TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(27).type, TShock.Utils.GetNPCById(27).name, 7, args.Player.TileX, args.Player.TileY, 50, 20);
@@ -369,7 +370,7 @@ namespace AIO
                     TSPlayer.All.SendMessage(string.Format("{0} has called Goblin Army, Tuck tack!", args.Player.Name), Color.Coral);
                     break;
                 case "pirate":
-                    TSPlayer.Server.SetTime(false, 0.0);
+                    //TSPlayer.Server.SetTime(false, 0.0);
                     TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(212).type, TShock.Utils.GetNPCById(212).name, 7, args.Player.TileX, args.Player.TileY, 50, 20);
                     TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(213).type, TShock.Utils.GetNPCById(213).name, 6, args.Player.TileX, args.Player.TileY, 50, 20);
                     TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(214).type, TShock.Utils.GetNPCById(214).name, 5, args.Player.TileX, args.Player.TileY, 50, 20);
@@ -378,14 +379,14 @@ namespace AIO
                     TSPlayer.All.SendMessage(string.Format("{0} has called Pirates, Mwahahaha!", args.Player.Name), Color.Coral);
                     break;
                 case "flegion":
-                    TSPlayer.Server.SetTime(false, 0.0);
+                    //TSPlayer.Server.SetTime(false, 0.0);
                     TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(143).type, TShock.Utils.GetNPCById(143).name, 8, args.Player.TileX, args.Player.TileY, 50, 20);
                     TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(144).type, TShock.Utils.GetNPCById(144).name, 8, args.Player.TileX, args.Player.TileY, 50, 20);
                     TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(145).type, TShock.Utils.GetNPCById(145).name, 8, args.Player.TileX, args.Player.TileY, 50, 20);
                     TSPlayer.All.SendMessage(string.Format("{0} has called Frost Legion! Am I jittery..?", args.Player.Name), Color.Coral);
                     break;
                 case "dlegion":
-                    TSPlayer.Server.SetTime(false, 0.0);
+                    //TSPlayer.Server.SetTime(false, 0.0);
                     TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(272).type, TShock.Utils.GetNPCById(272).name, 2, args.Player.TileX, args.Player.TileY, 50, 20);
                     TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(273).type, TShock.Utils.GetNPCById(273).name, 2, args.Player.TileX, args.Player.TileY, 50, 20);
                     TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(277).type, TShock.Utils.GetNPCById(277).name, 2, args.Player.TileX, args.Player.TileY, 50, 20);
@@ -402,17 +403,17 @@ namespace AIO
                     TSPlayer.All.SendMessage(string.Format("{0} has called Dungeon Legion, Kwaaahh!", args.Player.Name), Color.Coral);
                     break;
                 case "wof":
-                    TSPlayer.Server.SetTime(false, 0.0);
+                    //TSPlayer.Server.SetTime(false, 0.0);
                     TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(113).type, TShock.Utils.GetNPCById(113).name, 1, args.Player.TileX, args.Player.TileY, 50, 20);
                     args.Player.SendMessage(string.Format("{0} has spawned Wall of Flesh. Oh god, too hot!", args.Player.Name), Color.Coral);
                     break;
                 case "king":
-                    TSPlayer.Server.SetTime(false, 0.0);
+                    //TSPlayer.Server.SetTime(false, 0.0);
                     TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(50).type, TShock.Utils.GetNPCById(50).name, 1, args.Player.TileX, args.Player.TileY, 50, 20);
                     TSPlayer.All.SendMessage(string.Format("{0} has spawned King slime, Bounce bounce!", args.Player.Name), Color.Coral);
                     break;
                 case "golentera":
-                    TSPlayer.Server.SetTime(false, 0.0);
+                    //TSPlayer.Server.SetTime(false, 0.0);
                     TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(245).type, TShock.Utils.GetNPCById(245).name, 1, args.Player.TileX, args.Player.TileY, 50, 20);
                     TSPlayer.Server.SpawnNPC(TShock.Utils.GetNPCById(262).type, TShock.Utils.GetNPCById(262).name, 1, args.Player.TileX, args.Player.TileY, 50, 20);
                     TSPlayer.All.SendMessage(string.Format("{0} has spawned Golentera, Thump thump! ", args.Player.Name), Color.Coral);
