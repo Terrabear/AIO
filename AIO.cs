@@ -834,7 +834,7 @@ namespace AIO
                                             {
                                                 wplayer.WarningCount += 1;
                                                 warningwords.Add(Word);
-                                                player.SendErrorMessage("You have said a banned word: " + string.Join(" ", warningwords) + " You will be temp-banned in " + (config.AmountofWarningBeforeAction - wplayer.WarningCount) + " more incidents.");
+                                                player.SendErrorMessage("[AIO] You've said a banned word: " + string.Join(" ", warningwords) + " You will be temp-banned in " + (config.AmountofWarningBeforeAction - wplayer.WarningCount) + " more incidents.");
                                             }
                                         }
                                     }
@@ -861,7 +861,7 @@ namespace AIO
                                             {
                                                 wplayer.WarningCount += 1;
                                                 warningwords.Add(Word);
-                                                player.SendErrorMessage("You have said a banned word: " + string.Join(" ", warningwords) + " You will be banned in " + (config.AmountofWarningBeforeAction - wplayer.WarningCount) + " more incidents.");
+                                                player.SendErrorMessage("[AIO] You've said a banned word: " + string.Join(" ", warningwords) + " You will be banned in " + (config.AmountofWarningBeforeAction - wplayer.WarningCount) + " more incidents.");
                                             }
                                         }
                                     }
